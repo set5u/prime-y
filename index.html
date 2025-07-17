@@ -1,27 +1,27 @@
-"<!DOCTYPE html>
-<html lang=&quot;en&quot; >
+<!DOCTYPE html>
+<html lang="en" >
 
 <head>
-  <meta charset=&quot;UTF-8&quot;>
+  <meta charset="UTF-8">
   
 
-    <link rel=&quot;apple-touch-icon&quot; type=&quot;image/png&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png&quot; />
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
 
-    <meta name=&quot;apple-mobile-web-app-title&quot; content=&quot;CodePen&quot;>
+    <meta name="apple-mobile-web-app-title" content="CodePen">
 
-    <link rel=&quot;icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico&quot; />
+    <link rel="icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
 
-    <link rel=&quot;mask-icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg&quot; color=&quot;#111&quot; />
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
 
 
 
   
-    <script src=&quot;https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js&quot;></script>
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
 
 
   <title>PrimeYamanote</title>
 
-    <link rel=&quot;canonical&quot; href=&quot;https://codepen.io/ajiken4610/pen/JoYYyqZ&quot;>
+    <link rel="canonical" href="https://codepen.io/ajiken4610/pen/JoYYyqZ">
   
   
   
@@ -35,18 +35,18 @@
   
 </head>
 
-<body translate=&quot;no&quot;>
-  <div class=&quot;m-4&quot;>
-  <button class=&quot;float-right border rounded p-2&quot; @click=&quot;re&quot;>Restart</button>
-  <div class=&quot;text-2xl&quot;>PrimeYamanote</div>
-  <div class=&quot;pl-4&quot;>Enter (previous,2*previous) prime number.</div>
-  <div class=&quot;px-2&quot; v-for=&quot;i of l&quot;>- {{ i }}</div>
-  <input class=&quot;border rounded p-2&quot; v-model=&quot;p&quot; @keydown.enter=&quot;e(p)&quot;/>
+<body translate="no">
+  <div class="m-4">
+  <button class="float-right border rounded p-2" @click="re">Restart</button>
+  <div class="text-2xl">PrimeYamanote</div>
+  <div class="pl-4">Enter (previous,2*previous) prime number.</div>
+  <div class="px-2" v-for="i of l">- {{ i }}</div>
+  <input class="border rounded p-2" v-model="p" @keydown.enter="e(p)"/>
 </div>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/petite-vue/0.4.1/petite-vue.umd.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'></script>
-      <script id=&quot;rendered-js&quot; >
-&quot;use strict&quot;;
+      <script id="rendered-js" >
+"use strict";
 // const crypto = require('crypto').webcrypto; // Node.js 用（必要に応じて）
 function modPow(base, exponent, modulus) {
     base %= modulus;
@@ -129,11 +129,11 @@ function gcd(a, b) {
 PetiteVue.createApp({
     l: [2n],
     g: true,
-    p: &quot;3&quot;,
+    p: "3",
     lp: false,
     re() {
         this.l = [2n];
-        this.p = &quot;3&quot;;
+        this.p = "3";
     },
     e(p) {
         try {
@@ -153,7 +153,7 @@ PetiteVue.createApp({
             p = ppp ? `${p} is divisible by ${ppp}.` : `${p} is not a prime number.`;
         }
         this.l.push(p);
-        this.p = &quot;&quot;;
+        this.p = "";
     }
 }).mount();
     </script>
