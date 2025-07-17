@@ -1,0 +1,164 @@
+"<!DOCTYPE html>
+<html lang=&quot;en&quot; >
+
+<head>
+  <meta charset=&quot;UTF-8&quot;>
+  
+
+    <link rel=&quot;apple-touch-icon&quot; type=&quot;image/png&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png&quot; />
+
+    <meta name=&quot;apple-mobile-web-app-title&quot; content=&quot;CodePen&quot;>
+
+    <link rel=&quot;icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico&quot; />
+
+    <link rel=&quot;mask-icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg&quot; color=&quot;#111&quot; />
+
+
+
+  
+    <script src=&quot;https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js&quot;></script>
+
+
+  <title>PrimeYamanote</title>
+
+    <link rel=&quot;canonical&quot; href=&quot;https://codepen.io/ajiken4610/pen/JoYYyqZ&quot;>
+  
+  
+  
+  
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+</head>
+
+<body translate=&quot;no&quot;>
+  <div class=&quot;m-4&quot;>
+  <button class=&quot;float-right border rounded p-2&quot; @click=&quot;re&quot;>Restart</button>
+  <div class=&quot;text-2xl&quot;>PrimeYamanote</div>
+  <div class=&quot;pl-4&quot;>Enter (previous,2*previous) prime number.</div>
+  <div class=&quot;px-2&quot; v-for=&quot;i of l&quot;>- {{ i }}</div>
+  <input class=&quot;border rounded p-2&quot; v-model=&quot;p&quot; @keydown.enter=&quot;e(p)&quot;/>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/petite-vue/0.4.1/petite-vue.umd.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'></script>
+      <script id=&quot;rendered-js&quot; >
+&quot;use strict&quot;;
+// const crypto = require('crypto').webcrypto; // Node.js 用（必要に応じて）
+function modPow(base, exponent, modulus) {
+    base %= modulus;
+    let result = 1n;
+    while (exponent > 0n) {
+        if (exponent % 2n === 1n) {
+            result = (result * base) % modulus;
+        }
+        base = (base * base) % modulus;
+        exponent /= 2n;
+    }
+    return result;
+}
+function getRandomBigInt(min, max) {
+    const range = max - min + 1n;
+    const bits = range.toString(2).length;
+    const bytes = Math.ceil(bits / 8);
+    const mask = (1n << BigInt(bits)) - 1n;
+    while (true) {
+        const randomBytes = new Uint8Array(bytes);
+        crypto.getRandomValues(randomBytes);
+        let rand = 0n;
+        for (let i = 0; i < bytes; i++) {
+            rand = (rand << 8n) + BigInt(randomBytes[i]);
+        }
+        rand = rand &amp; mask;
+        if (rand <= range)
+            return min + rand;
+    }
+}
+/**
+
+ * 素数らしければ true を返し、合成数で素因数が見つかったらその因数を返す。
+
+ * 合成数だが素因数が見つからなければ false を返す。
+
+ */
+function isProbablyPrime(n, k = 20) {
+    if (n === 2n || n === 3n)
+        return true;
+    if (n < 2n || n % 2n === 0n)
+        return 2n;
+    let r = 0n;
+    let d = n - 1n;
+    while (d % 2n === 0n) {
+        d /= 2n;
+        r += 1n;
+    }
+    let rere = true;
+    outer: for (let i = 0; i < k; i++) {
+        const a = getRandomBigInt(2n, n - 2n);
+        let x = modPow(a, d, n);
+        if (x === 1n || x === n - 1n)
+            continue;
+        for (let j = 1n; j < r; j++) {
+            const xSquared = modPow(x, 2n, n);
+            if (xSquared === 1n &amp;&amp; x !== 1n &amp;&amp; x !== n - 1n) {
+                const factor = gcd(x - 1n, n);
+                if (factor !== 1n &amp;&amp; factor !== n)
+                    return factor;
+            }
+            x = xSquared;
+            if (x === n - 1n)
+                continue outer;
+        }
+        // 合成数が確定。因数を探す。
+        const factor = gcd(x - 1n, n);
+        if (factor !== 1n &amp;&amp; factor !== n)
+            return factor;
+        rere = false;
+    }
+    return rere;
+}
+function gcd(a, b) {
+    while (b !== 0n) {
+        [a, b] = [b, a % b];
+    }
+    return a;
+}
+PetiteVue.createApp({
+    l: [2n],
+    g: true,
+    p: &quot;3&quot;,
+    lp: false,
+    re() {
+        this.l = [2n];
+        this.p = &quot;3&quot;;
+    },
+    e(p) {
+        try {
+            p = BigInt(p);
+        }
+        catch (_a) {
+            return;
+        }
+        const la = this.l[this.l.length - 1];
+        if (p <= la || p >= 2n * la) {
+            return;
+        }
+        let ppp;
+        if ((ppp = isProbablyPrime(p)) === true) {
+        }
+        else {
+            p = ppp ? `${p} is divisible by ${ppp}.` : `${p} is not a prime number.`;
+        }
+        this.l.push(p);
+        this.p = &quot;&quot;;
+    }
+}).mount();
+    </script>
+
+  
+</body>
+
+</html>
