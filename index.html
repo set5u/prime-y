@@ -72,7 +72,7 @@ function getRandomBigInt(min, max) {
         for (let i = 0; i < bytes; i++) {
             rand = (rand << 8n) + BigInt(randomBytes[i]);
         }
-        rand = rand &amp; mask;
+        rand = rand & mask;
         if (rand <= range)
             return min + rand;
     }
@@ -103,9 +103,9 @@ function isProbablyPrime(n, k = 20) {
             continue;
         for (let j = 1n; j < r; j++) {
             const xSquared = modPow(x, 2n, n);
-            if (xSquared === 1n &amp;&amp; x !== 1n &amp;&amp; x !== n - 1n) {
+            if (xSquared === 1n && x !== 1n && x !== n - 1n) {
                 const factor = gcd(x - 1n, n);
-                if (factor !== 1n &amp;&amp; factor !== n)
+                if (factor !== 1n && factor !== n)
                     return factor;
             }
             x = xSquared;
@@ -114,7 +114,7 @@ function isProbablyPrime(n, k = 20) {
         }
         // 合成数が確定。因数を探す。
         const factor = gcd(x - 1n, n);
-        if (factor !== 1n &amp;&amp; factor !== n)
+        if (factor !== 1n && factor !== n)
             return factor;
         rere = false;
     }
