@@ -142,14 +142,15 @@ PetiteVue.createApp({
         catch (_a) {
             return;
         }
-        const la = this.l[this.l.length - 1];
+        let la = this.l[this.l.length - 1];
+      if(typeof la === "string"){
+        la = BigInt(la.split(" ")[0]);
+      }
         if (p <= la || p >= 2n * la) {
             return;
         }
         let ppp;
-        if ((ppp = isProbablyPrime(p)) === true) {
-        }
-        else {
+        if ((ppp = isProbablyPrime(p)) !== true) {
             p = ppp ? `${p} is divisible by ${ppp}.` : `${p} is not a prime number.`;
         }
         this.l.push(p);
